@@ -1,0 +1,25 @@
+on:
+  push:
+    branches:
+      - main
+name: Build and Deploy
+jobs:
+  build:
+    runs-on: self-hosted
+    timeout-minutes: 360
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Create env file
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_DATABASE_URL: "postgresql://postgres:postgres@customer_registration_postgres:5432/customer_registration_db"
+          envkey_POSTGRES_USER: "postgres"
+          envkey_POSTGRES_PASSWORD: "postgres"
+          envkey_POSTGRES_DB: "customer_registration_db"
+          file_name: ".env"
+      - name: Build
+        run: docker-compose build
+      
+      - name: Run
+        run: docker-compose down && docker-compose up -d
