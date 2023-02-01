@@ -1,4 +1,4 @@
-import { ConflictException } from '@nestjs/common';
+import { ConflictException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CustomerController } from './customer.controller';
 import { CustomerService } from './customer.service';
@@ -64,6 +64,13 @@ describe('CustomerController', () => {
     it('should return a customer by CPF', async () => {
       const response = await controller.findByCPF('');
       expect(response).toEqual(mockedCustomer);
+    });
+
+    it('should throw not found exception on findByCPF', async () => {
+      jest
+        .spyOn(service, 'findByCPF')
+        .mockRejectedValueOnce(new NotFoundException());
+      expect(controller.findByCPF('')).rejects.toThrowError('Not Found');
     });
   });
 });
