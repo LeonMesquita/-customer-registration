@@ -1,26 +1,26 @@
 services:
-  postgres_image:
+  customer_registration_postgres:
     image: postgres
-    container_name: postgres_image
+    container_name: customer_registration_postgres
     restart: always
     ports:
       - 3255:5432
     volumes:
-      - postgres_image:/var/lib/postgresql/data
+      - customer_registration_postgres:/var/lib/postgresql/data
     env_file:
       - .env
 
 
-  node_image:
-    container_name: node_image
+  customer_registration_app:
+    container_name: customer_registration_app
     build: .
     ports:
       - 5000:5000
     depends_on:
-      - postgres_image
+      - customer_registration_postgres
     env_file:
       - .env
 
 
 volumes:
-  postgres_image:
+  customer_registration_postgres:

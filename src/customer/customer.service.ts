@@ -1,11 +1,23 @@
 import { Injectable } from '@nestjs/common';
+import { Customer } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
-import { UpdateCustomerDto } from './dto/update-customer.dto';
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class CustomerService {
-  create(createCustomerDto: CreateCustomerDto) {
-    return 'This action adds a new customer';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
+    const date = new Date(
+      createCustomerDto.birth_date.split('-').reverse().join('-'),
+    );
+    return await this.prisma.customer.create({
+      data: {
+        ...createCustomerDto,
+        birth_date: date.toISOString(),
+      },
+    });
   }
 
   findAll() {
@@ -14,13 +26,5 @@ export class CustomerService {
 
   findOne(id: number) {
     return `This action returns a #${id} customer`;
-  }
-
-  update(id: number, updateCustomerDto: UpdateCustomerDto) {
-    return `This action updates a #${id} customer`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} customer`;
   }
 }
