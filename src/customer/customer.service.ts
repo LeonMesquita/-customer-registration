@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { Customer } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
@@ -10,8 +10,10 @@ export class CustomerService {
 
   async create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
     const date = new Date(
-      createCustomerDto.birth_date.split('-').reverse().join('-'),
+      createCustomerDto.birth_date.split('/').reverse().join('/'),
     );
+    const customer = await this.findByCPF(createCustomerDto.cpf);
+    if (customer) throw new ConflictException('This CPF already exists');
     return await this.prisma.customer.create({
       data: {
         ...createCustomerDto,
@@ -24,7 +26,7 @@ export class CustomerService {
     return `This action returns all customer`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} customer`;
+  async findByCPF(cpf: string): Promise<Customer> {
+    return await this.prisma.customer.findUnique({ where: { cpf } });
   }
 }
