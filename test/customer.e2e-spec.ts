@@ -3,7 +3,6 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { CreateCustomerDto } from 'src/customer/dto/create-customer.dto';
-import { Customer } from 'src/customer/entities/customer.entity';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -44,5 +43,11 @@ describe('AppController (e2e)', () => {
         const customer = response.body;
         expect(customer).toBeInstanceOf(Object);
       });
+  });
+
+  it('/ (GET) should throw not found exception if the customer was not found', async () => {
+    return request(app.getHttpServer())
+      .get(`/customer/00000000000`)
+      .expect(404);
   });
 });
