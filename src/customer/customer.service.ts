@@ -6,7 +6,7 @@ import {
 import { Customer } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
-import * as dayjs from 'dayjs';
+// import * as dayjs from 'dayjs';
 
 @Injectable()
 export class CustomerService {
