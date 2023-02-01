@@ -27,4 +27,11 @@ describe('AppController (e2e)', () => {
       .send(mockCustomer)
       .expect(201);
   });
+
+  it('/ (POST) should throw conflict exception if the CPF already exists', async () => {
+    return request(app.getHttpServer())
+      .post('/customer')
+      .send(mockCustomer)
+      .expect(409);
+  });
 });
