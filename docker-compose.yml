@@ -1,0 +1,26 @@
+services:
+  postgres_image:
+    image: postgres
+    container_name: postgres_image
+    restart: always
+    ports:
+      - 3255:5432
+    volumes:
+      - postgres_image:/var/lib/postgresql/data
+    env_file:
+      - .env
+
+
+  node_image:
+    container_name: node_image
+    build: .
+    ports:
+      - 5000:5000
+    depends_on:
+      - postgres_image
+    env_file:
+      - .env
+
+
+volumes:
+  postgres_image:
