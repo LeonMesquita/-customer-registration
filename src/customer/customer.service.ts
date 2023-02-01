@@ -4,9 +4,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Customer } from '@prisma/client';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../../src/prisma/prisma.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
-// import * as dayjs from 'dayjs';
 
 @Injectable()
 export class CustomerService {
