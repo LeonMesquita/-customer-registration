@@ -34,7 +34,9 @@ export class CustomerService {
   }
 
   async findByCPF(cpf: string): Promise<Customer> {
-    const customer = await this.prisma.customer.findUnique({ where: { cpf } });
+    const customer = await this.prisma.customer.findUnique({
+      where: { cpf: cpf.replace(/\D/g, '') },
+    });
     if (!customer) throw new NotFoundException('Customer nof found');
     return customer;
   }
