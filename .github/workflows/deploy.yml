@@ -19,7 +19,7 @@ jobs:
           envkey_POSTGRES_DB: "customer_registration_db"
           file_name: ".env"
       - name: Build
-        run: docker-compose build
+        run: docker-compose down && docker-compose build
       
       - name: Run
-        run: docker-compose down && docker-compose up -d
+        run: docker-compose up -d
