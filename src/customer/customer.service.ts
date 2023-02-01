@@ -16,14 +16,18 @@ export class CustomerService {
     const date = new Date(
       createCustomerDto.birth_date.split('/').reverse().join('/'),
     );
+    const cpf = createCustomerDto.cpf.replace(/\D/g, '');
     const customer = await this.prisma.customer.findUnique({
-      where: { cpf: createCustomerDto.cpf },
+      where: { cpf },
     });
-    if (customer) throw new ConflictException('This CPF already exists');
+
+    if (customer) {
+      throw new ConflictException('This CPF already exists');
+    }
     return await this.prisma.customer.create({
       data: {
         ...createCustomerDto,
-        cpf: createCustomerDto.cpf.replace(/\D/g, ''),
+        cpf,
         birth_date: date.toISOString(),
       },
     });
