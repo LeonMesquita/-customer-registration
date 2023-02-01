@@ -28,8 +28,8 @@ describe('CustomerController', () => {
           provide: CustomerService,
           useValue: {
             create: jest.fn().mockResolvedValue(mockedCustomer),
-            findAll: jest.fn(),
-            findByCPF: jest.fn(),
+            findAll: jest.fn().mockResolvedValue([mockedCustomer]),
+            findByCPF: jest.fn().mockResolvedValue(mockedCustomer),
           },
         },
       ],
@@ -57,6 +57,13 @@ describe('CustomerController', () => {
       expect(controller.create(mockedCustomerDto)).rejects.toThrowError(
         'Conflict',
       );
+    });
+  });
+
+  describe('findByCPF', () => {
+    it('should return a customer by CPF', async () => {
+      const response = await controller.findByCPF('');
+      expect(response).toEqual(mockedCustomer);
     });
   });
 });
