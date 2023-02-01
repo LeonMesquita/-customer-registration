@@ -3,6 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { CreateCustomerDto } from 'src/customer/dto/create-customer.dto';
+import { Customer } from 'src/customer/entities/customer.entity';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -33,5 +34,15 @@ describe('AppController (e2e)', () => {
       .post('/customer')
       .send(mockCustomer)
       .expect(409);
+  });
+
+  it('/ (GET) should return a customer by CPF', async () => {
+    return request(app.getHttpServer())
+      .get(`/customer/${mockCustomer.cpf}`)
+      .expect(200)
+      .then((response) => {
+        const customer = response.body;
+        expect(customer).toBeInstanceOf(Object);
+      });
   });
 });

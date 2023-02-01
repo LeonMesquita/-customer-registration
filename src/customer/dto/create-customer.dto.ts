@@ -1,7 +1,7 @@
 import { Customer } from '../entities/customer.entity';
 import { IsString, Matches } from 'class-validator';
 
-export class CreateCustomerDto extends Customer {
+export class CreateCustomerDto {
   @IsString()
   name: string;
 
