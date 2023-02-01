@@ -49,5 +49,14 @@ describe('CustomerController', () => {
       const response = await controller.create(mockedCustomerDto);
       expect(response).toEqual(mockedCustomer);
     });
+
+    it('should throw conflict exception on create', async () => {
+      jest
+        .spyOn(service, 'create')
+        .mockRejectedValueOnce(new ConflictException());
+      expect(controller.create(mockedCustomerDto)).rejects.toThrowError(
+        'Conflict',
+      );
+    });
   });
 });
