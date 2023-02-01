@@ -20,6 +20,8 @@ describe('CustomerController', () => {
     birth_date: '16/04/1998',
   };
 
+  const customersList: Array<Customer> = [mockedCustomer];
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [CustomerController],
@@ -28,7 +30,7 @@ describe('CustomerController', () => {
           provide: CustomerService,
           useValue: {
             create: jest.fn().mockResolvedValue(mockedCustomer),
-            findAll: jest.fn().mockResolvedValue([mockedCustomer]),
+            findAll: jest.fn().mockResolvedValue(customersList),
             findByCPF: jest.fn().mockResolvedValue(mockedCustomer),
           },
         },
@@ -72,5 +74,19 @@ describe('CustomerController', () => {
         .mockRejectedValueOnce(new NotFoundException());
       expect(controller.findByCPF('')).rejects.toThrowError('Not Found');
     });
+  });
+
+  describe('findAll', () => {
+    it('should return a list of customers', async () => {
+      const response = await controller.findAll();
+      expect(response).toEqual(customersList);
+    });
+
+    // it('should throw not found exception on findByCPF', async () => {
+    //   jest
+    //     .spyOn(service, 'findByCPF')
+    //     .mockRejectedValueOnce(new NotFoundException());
+    //   expect(controller.findByCPF('')).rejects.toThrowError('Not Found');
+    // });
   });
 });
