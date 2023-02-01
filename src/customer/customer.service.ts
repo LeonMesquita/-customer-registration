@@ -29,8 +29,8 @@ export class CustomerService {
     });
   }
 
-  findAll() {
-    return `This action returns all customer`;
+  async findAll(): Promise<Customer[]> {
+    return await this.prisma.customer.findMany();
   }
 
   async findByCPF(cpf: string): Promise<Customer> {
