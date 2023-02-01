@@ -50,4 +50,14 @@ describe('AppController (e2e)', () => {
       .get(`/customer/00000000000`)
       .expect(404);
   });
+
+  it('/ (GET) should return a list of custumers', async () => {
+    return request(app.getHttpServer())
+      .get(`/customer`)
+      .expect(200)
+      .then((response) => {
+        const customers = response.body;
+        expect(Array.isArray(customers)).toBe(true);
+      });
+  });
 });
