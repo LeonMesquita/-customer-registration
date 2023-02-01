@@ -17,7 +17,7 @@ export class CustomerController {
   }
 
   @Get(':cpf')
-  findOne(@Param('cpf') cpf: string) {
+  findByCPF(@Param('cpf') cpf: string) {
     return this.customerService.findByCPF(cpf);
   }
 }
