@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Customer, PrismaClient } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -70,6 +71,14 @@ describe('CustomerService', () => {
       const response = await service.findByCPF('');
       expect(mockedFindUnique).toHaveBeenCalled();
       expect(response).toEqual(mockedCustomer);
+    });
+
+    it('should throw not found exception if customer was not found', async () => {
+      jest
+        .spyOn(service, 'checkCustomerExists')
+        .mockRejectedValueOnce(new NotFoundException());
+      expect(mockedFindUnique).toHaveBeenCalled();
+      expect(service.findByCPF('')).rejects.toThrowError('Not Found');
     });
   });
 });
