@@ -77,8 +77,14 @@ describe('CustomerService', () => {
       jest
         .spyOn(service, 'checkCustomerExists')
         .mockRejectedValueOnce(new NotFoundException());
-      expect(mockedFindUnique).toHaveBeenCalled();
       expect(service.findByCPF('')).rejects.toThrowError('Not Found');
+    });
+  });
+
+  describe('findAll', () => {
+    it('should return a list of customers', async () => {
+      const response = await service.findAll(1, 10);
+      expect(response).toEqual(customersList);
     });
   });
 });

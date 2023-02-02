@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 
@@ -12,8 +12,8 @@ export class CustomerController {
   }
 
   @Get()
-  findAll() {
-    return this.customerService.findAll();
+  findAll(@Query('page') page = 1, @Query('limit') limit = 10) {
+    return this.customerService.findAll(Number(page), Number(limit));
   }
 
   @Get(':cpf')
