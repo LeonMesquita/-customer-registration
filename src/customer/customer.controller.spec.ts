@@ -81,12 +81,5 @@ describe('CustomerController', () => {
       const response = await controller.findAll();
       expect(response).toEqual(customersList);
     });
-
-    // it('should throw not found exception on findByCPF', async () => {
-    //   jest
-    //     .spyOn(service, 'findByCPF')
-    //     .mockRejectedValueOnce(new NotFoundException());
-    //   expect(controller.findByCPF('')).rejects.toThrowError('Not Found');
-    // });
   });
 });

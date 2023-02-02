@@ -17,4 +17,4 @@ jobs:
       - name: Run E2E tests
         run: docker-compose -f docker-compose-tests.yml run customer_registration_app npm run test:e2e
       - name: Run Unit tests
-        run: docker-compose -f docker-compose-tests.yml run customer_registration_app npm run test -t src/customer/customer.controller.spec.ts
+        run: docker-compose -f docker-compose-tests.yml run customer_registration_app npm run test
