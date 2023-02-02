@@ -32,12 +32,17 @@ export class CustomerService {
     });
   }
 
-  async findAll(): Promise<Customer[]> {
-    return await this.prisma.customer.findMany();
+  async findAll(page: number, limit: number): Promise<Customer[]> {
+    const skip = (page - 1) * limit;
+    return await this.prisma.customer.findMany({
+      skip,
+      take: limit,
+    });
   }
 
   async findByCPF(cpf: string): Promise<Customer> {
     const customer = await this.checkCustomerExists(cpf);
+    if (!customer) throw new NotFoundException('Customer nof found');
     return customer;
   }
 
@@ -45,7 +50,6 @@ export class CustomerService {
     const customer = await this.prisma.customer.findUnique({
       where: { cpf: cpf.replace(/\D/g, '') },
     });
-    if (!customer) throw new NotFoundException('Customer nof found');
     return customer;
   }
 }
