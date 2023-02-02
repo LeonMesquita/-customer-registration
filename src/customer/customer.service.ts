@@ -37,6 +37,11 @@ export class CustomerService {
   }
 
   async findByCPF(cpf: string): Promise<Customer> {
+    const customer = await this.checkCustomerExists(cpf);
+    return customer;
+  }
+
+  async checkCustomerExists(cpf: string) {
     const customer = await this.prisma.customer.findUnique({
       where: { cpf: cpf.replace(/\D/g, '') },
     });
