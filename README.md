@@ -128,7 +128,7 @@ $ docker-compose -f docker-compose-tests.yml run customer_registration_app npm r
 ```yml
 # Crie um novo banco Postgres local específico para os testes, em seguida crie o arquivo .env.test na raiz do projeto e defina a variável de ambiente DATABASE_URL com a url do seu banco de testes:
 
-DATABASE_URL=postgres://postgres:postgres@localhost:5432/event_management_db_test
+DATABASE_URL=postgres://postgres:postgres@localhost:5432/customer_registration_test
 
 
 # Executando testes Unitários
