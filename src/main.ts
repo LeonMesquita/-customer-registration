@@ -8,8 +8,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix('/api');
   const config = new DocumentBuilder()
-    .setTitle('Template NestJS API')
-    .setDescription('Documentação Swagger de uma API NestJS')
+    .setTitle('Customer Registration API')
+    .setDescription('Documentação Swagger de uma API de cadastro de clientes')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);

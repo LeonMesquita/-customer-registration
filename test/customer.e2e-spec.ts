@@ -8,7 +8,7 @@ describe('AppController (e2e)', () => {
   let app: INestApplication;
   const mockCustomer: CreateCustomerDto = {
     name: 'Leonardo Mesquita',
-    cpf: '072.699.313-13',
+    cpf: '111.444.777-35',
     birth_date: '16/04/1998',
   };
 
