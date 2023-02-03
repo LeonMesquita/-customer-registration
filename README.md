@@ -1,11 +1,11 @@
 
 ##  :clipboard: Descrição
 
-API de gerenciamento de eventos desenvolvida em [Nest](https://github.com/nestjs/nest).
+API de cadastro de clientes desenvolvida em Nest.js.
 
 ***
 
-## :computer:	 Tecnologias e Conceitos
+## :zap: Tecnologias e Conceitos
 
 - REST API
 - TypeScript
@@ -30,7 +30,7 @@ git clone https://github.com/LeonMesquita/customer-registration.git
 ```
 ***
 
-## Rodando no Docker
+## 🐳 Rodando no Docker
 ```yml
 # crie um arquivo .env na raiz do projeto e defina as variáveis de ambiente necessárias para a imagem do Postgres. Exemplo:
 
@@ -51,7 +51,7 @@ $ docker-compose up --build
 
 ***
 
-## Rodando na máquina local
+## 💻 Rodando na máquina local
 ```bash
 # Crie um arquivo .env na raiz e defina a variável de ambiente DATABASE_URL que recebe a url do seu banco Postgres local. Exemplo:
 
@@ -75,7 +75,7 @@ $ npm run start:prod
 
 ***
 
-## URL da API
+## 🔗 URL da API
 ```yml
 # Via deploy AWS
 http://ec2-52-87-154-30.compute-1.amazonaws.com/api/
@@ -87,7 +87,7 @@ http://localhost:5000/api/
 ***
 
 
-## Documentação Swagger
+## 📚 Documentação Swagger
 ```yml
 # Via deploy AWS
 http://ec2-52-87-154-30.compute-1.amazonaws.com/api/docs
@@ -99,7 +99,7 @@ http://localhost:5000/api/docs
 ***
 
 
-## Rodando os testes no Docker
+## 🐳 Rodando os testes no Docker
 ```bash
 # Os testes utilizam outro banco de dados específico para testes, por isso certifique-se de criar um arquivo .env.test e definir as variáveis de ambiente do banco de testes. Exemplo:
 
@@ -123,7 +123,7 @@ $ docker-compose -f docker-compose-tests.yml run customer_registration_app npm r
 ***
 
 
-## Rodando os testes na máquina local
+## 💻 Rodando os testes na máquina local
 
 ```bash
 # Crie um novo banco Postgres local específico para os testes, em seguida crie o arquivo .env.test na raiz do projeto e defina a variável de ambiente DATABASE_URL com a url do seu banco de testes:
