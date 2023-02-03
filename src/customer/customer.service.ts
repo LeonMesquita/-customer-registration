@@ -1,17 +1,27 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { Customer } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { CPFValidator } from 'src/utils/cpf-validator.util';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 
 @Injectable()
 export class CustomerService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly cpfValidator: CPFValidator,
+  ) {}
 
   async create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
+    const isValid = this.cpfValidator.validate(createCustomerDto.cpf);
+    if (!isValid) {
+      throw new UnprocessableEntityException('Invalid CPF');
+    }
     const date = new Date(
       createCustomerDto.birth_date.split('/').reverse().join('/'),
     );
@@ -33,6 +43,9 @@ export class CustomerService {
   }
 
   async findAll(page: number, limit: number): Promise<Customer[]> {
+    if (!Number(page) || !Number(limit)) {
+      throw new BadRequestException('Page and limit must be numbers');
+    }
     const skip = (page - 1) * limit;
     return await this.prisma.customer.findMany({
       skip,
