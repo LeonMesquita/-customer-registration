@@ -2,6 +2,7 @@ import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Customer, PrismaClient } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { CPFValidator } from 'src/utils/cpf-validator.util';
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 
@@ -10,13 +11,13 @@ describe('CustomerService', () => {
   const mockedCustomer: Customer = {
     id: 1,
     name: 'Mocked Name',
-    cpf: '834.763.564-15',
+    cpf: '111.444.777-35',
     birth_date: new Date(),
     createdAt: new Date(),
   };
   const mockedCustomerDto: CreateCustomerDto = {
     name: 'Mocked Name',
-    cpf: '834.763.564-15',
+    cpf: '111.444.777-35',
     birth_date: '16/04/1998',
   };
 
@@ -43,6 +44,12 @@ describe('CustomerService', () => {
         {
           provide: PrismaService,
           useValue: prismaServiceMock,
+        },
+        {
+          provide: CPFValidator,
+          useValue: {
+            validate: jest.fn().mockResolvedValue(true),
+          },
         },
       ],
     }).compile();
