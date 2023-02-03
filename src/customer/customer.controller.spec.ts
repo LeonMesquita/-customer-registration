@@ -1,5 +1,6 @@
 import { ConflictException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { CPFValidator } from 'src/utils/cpf-validator.util';
 import { CustomerController } from './customer.controller';
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
@@ -11,12 +12,12 @@ describe('CustomerController', () => {
   const mockedCustomer: Customer = {
     id: 1,
     name: 'Mocked Name',
-    cpf: '834.763.564-15',
+    cpf: '111.444.777-35',
     birth_date: new Date(),
   };
   const mockedCustomerDto: CreateCustomerDto = {
     name: 'Mocked Name',
-    cpf: '834.763.564-15',
+    cpf: '111.444.777-35',
     birth_date: '16/04/1998',
   };
 
@@ -32,6 +33,12 @@ describe('CustomerController', () => {
             create: jest.fn().mockResolvedValue(mockedCustomer),
             findAll: jest.fn().mockResolvedValue(customersList),
             findByCPF: jest.fn().mockResolvedValue(mockedCustomer),
+          },
+        },
+        {
+          provide: CPFValidator,
+          useValue: {
+            validate: jest.fn().mockResolvedValue(true),
           },
         },
       ],

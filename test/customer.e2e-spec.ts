@@ -28,6 +28,16 @@ describe('AppController (e2e)', () => {
       .expect(201);
   });
 
+  it('/ (POST) should throw enprocessable entity if the CPF is incorrect', async () => {
+    return request(app.getHttpServer())
+      .post('/customer')
+      .send({
+        ...mockCustomer,
+        cpf: '111.444.777-05',
+      })
+      .expect(422);
+  });
+
   it('/ (POST) should throw conflict exception if the CPF already exists', async () => {
     return request(app.getHttpServer())
       .post('/customer')
