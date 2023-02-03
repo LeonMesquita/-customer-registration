@@ -1,40 +1,68 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+##  :clipboard: Descrição
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+API de gerenciamento de eventos desenvolvida em [Nest](https://github.com/nestjs/nest).
 
-## Description
+***
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## :computer:	 Tecnologias e Conceitos
 
-## Installation
+- REST API
+- TypeScript
+- Node.js
+- Nest.js
+- PostgreSQL with PrismaORM
+- Jest and Supertest
+- Swagger
+- Docker
+- CI/CD with Github Actions
+- AWS EC2
+- POO
 
-```bash
-$ npm install
+***
+
+## 🏁 Rodando a aplicação
+
+Primeiro, faça o clone desse repositório na sua maquina:
+
+```
+git clone https://github.com/LeonMesquita/customer-registration.git
+```
+***
+
+## Rodando no Docker
+```yml
+# crie um arquivo .env na raiz do projeto e defina as variáveis de ambiente necessárias para a imagem do Postgres. Exemplo:
+
+DATABASE_URL=postgresql://postgres:postgres@customer_registration_postgres:5432/customer_registration_db
+
+POSTGRES_USER=postgres 
+
+POSTGRES_PASSWORD=postgres
+
+POSTGRES_DB=customer_registration_db
+
+
+# Execute o seguinte comando
+$ docker-compose up --build
+
+# Observação: Por padrão, a porta do Postgres etá mapeada na porta 3255 e a do Node na porta 80, você pode mudar para as portas que achar melhor.
 ```
 
-## Running the app
+***
 
+## Rodando na máquina local
 ```bash
+# Crie um arquivo .env na raiz e defina a variável de ambiente DATABASE_URL que recebe a url do seu banco Postgres local. Exemplo:
+
+DATABASE_URL=postgres://postgres:postgres@localhost:5432/customer_registration_db
+
+
+# Instale as dependências
+$ npm install
+
+# Por fim, rode a aplicação
+
 # development
 $ npm run start
 
@@ -45,29 +73,95 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+***
 
-```bash
-# unit tests
-$ npm run test
+## URL da API
+```yml
+# Via deploy AWS
+http://ec2-52-87-154-30.compute-1.amazonaws.com/api/
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Via localhost
+http://localhost:5000/api/
 ```
 
-## Support
+***
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
+## Documentação Swagger
+```yml
+# Via deploy AWS
+http://ec2-52-87-154-30.compute-1.amazonaws.com/api/docs
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+# Via localhost
+http://localhost:5000/api/docs
+```
 
-## License
+***
 
-Nest is [MIT licensed](LICENSE).
+
+## Rodando os testes no Docker
+```bash
+# Os testes utilizam outro banco de dados específico para testes, por isso certifique-se de criar um arquivo .env.test e definir as variáveis de ambiente do banco de testes. Exemplo:
+
+DATABASE_URL=postgresql://postgres:postgres@customer_registration_postgres:5432/customer_registration_db_test
+
+POSTGRES_USER=postgres 
+
+POSTGRES_PASSWORD=postgres
+
+POSTGRES_DB=customer_registration_db_test
+
+
+# Executando testes E2E
+$ docker-compose -f docker-compose-tests.yml run customer_registration_app npm run test:e2e
+
+# Executando testes Unitários
+$ docker-compose -f docker-compose-tests.yml run customer_registration_app npm run test
+```
+
+
+***
+
+
+## Rodando os testes na máquina local
+
+```bash
+# Crie um novo banco Postgres local específico para os testes, em seguida crie o arquivo .env.test na raiz do projeto e defina a variável de ambiente DATABASE_URL com a url do seu banco de testes:
+
+DATABASE_URL=postgres://postgres:postgres@localhost:5432/event_management_db_test
+
+
+# Executando testes Unitários
+$ npm run test
+
+# Executando testes E2E
+$ npm run test:e2e
+```
+
+***
+
+## :rocket: Rotas
+
+```yml
+POST /customer
+    - Rota para cadastrar um novo cliente
+    - headers: {}
+    - body: {
+        "name": "Lorem ipsum",
+        "cpf": "111.444.777-35",
+        "birth_date": "20/05/1992"
+      }
+```
+```yml
+GET /customer?page=1&limit=10
+    - Rota para retornar uma lista de clientes com paginação
+    - headers: {}
+    - body: {}
+```
+
+```yml
+GET /customer/:cpf
+    - Rota para buscar um cliente pelo CPF
+    - headers: {}
+    - body: {}
+```
