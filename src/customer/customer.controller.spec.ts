@@ -1,27 +1,17 @@
 import { ConflictException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CPFValidator } from 'src/utils/cpf-validator.util';
+import {
+  customersList,
+  mockedCustomer,
+  mockedCustomerDto,
+} from 'src/utils/mocks.util';
 import { CustomerController } from './customer.controller';
 import { CustomerService } from './customer.service';
-import { CreateCustomerDto } from './dto/create-customer.dto';
-import { Customer } from './entities/customer.entity';
 
 describe('CustomerController', () => {
   let controller: CustomerController;
   let service: CustomerService;
-  const mockedCustomer: Customer = {
-    id: 1,
-    name: 'Mocked Name',
-    cpf: '111.444.777-35',
-    birth_date: new Date(),
-  };
-  const mockedCustomerDto: CreateCustomerDto = {
-    name: 'Mocked Name',
-    cpf: '111.444.777-35',
-    birth_date: '16/04/1998',
-  };
-
-  const customersList: Array<Customer> = [mockedCustomer];
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
