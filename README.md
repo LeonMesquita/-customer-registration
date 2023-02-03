@@ -52,7 +52,7 @@ $ docker-compose up --build
 ***
 
 ## 💻 Rodando na máquina local
-```bash
+```yml
 # Crie um arquivo .env na raiz e defina a variável de ambiente DATABASE_URL que recebe a url do seu banco Postgres local. Exemplo:
 
 DATABASE_URL=postgres://postgres:postgres@localhost:5432/customer_registration_db
@@ -100,7 +100,7 @@ http://localhost:5000/api/docs
 
 
 ## 🐳 Rodando os testes no Docker
-```bash
+```yml
 # Os testes utilizam outro banco de dados específico para testes, por isso certifique-se de criar um arquivo .env.test e definir as variáveis de ambiente do banco de testes. Exemplo:
 
 DATABASE_URL=postgresql://postgres:postgres@customer_registration_postgres:5432/customer_registration_db_test
@@ -125,7 +125,7 @@ $ docker-compose -f docker-compose-tests.yml run customer_registration_app npm r
 
 ## 💻 Rodando os testes na máquina local
 
-```bash
+```yml
 # Crie um novo banco Postgres local específico para os testes, em seguida crie o arquivo .env.test na raiz do projeto e defina a variável de ambiente DATABASE_URL com a url do seu banco de testes:
 
 DATABASE_URL=postgres://postgres:postgres@localhost:5432/event_management_db_test
