@@ -1,4 +1,7 @@
-import { NotFoundException } from '@nestjs/common';
+import {
+  NotFoundException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Customer, PrismaClient } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -8,6 +11,7 @@ import { CreateCustomerDto } from './dto/create-customer.dto';
 
 describe('CustomerService', () => {
   let service: CustomerService;
+  let cpfValidator: CPFValidator;
   const mockedCustomer: Customer = {
     id: 1,
     name: 'Mocked Name',
@@ -55,6 +59,7 @@ describe('CustomerService', () => {
     }).compile();
 
     service = module.get<CustomerService>(CustomerService);
+    cpfValidator = module.get<CPFValidator>(CPFValidator);
 
     jest
       .spyOn(service, 'checkCustomerExists')
@@ -70,6 +75,13 @@ describe('CustomerService', () => {
       const response = await service.create(mockedCustomerDto);
       expect(mockedFindUnique).toHaveBeenCalled();
       expect(response).toEqual(mockedCustomer);
+    });
+
+    it('should throw enprocessable entity if the CPF is incorrect', async () => {
+      jest.spyOn(cpfValidator, 'validate').mockReturnValue(false);
+      expect(service.create(mockedCustomerDto)).rejects.toThrowError(
+        new UnprocessableEntityException('Invalid CPF'),
+      );
     });
   });
 
