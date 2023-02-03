@@ -2,15 +2,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
-import { CreateCustomerDto } from 'src/customer/dto/create-customer.dto';
+import { mockedCustomerDto } from 'src/utils/mocks.util';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
-  const mockCustomer: CreateCustomerDto = {
-    name: 'Leonardo Mesquita',
-    cpf: '111.444.777-35',
-    birth_date: '16/04/1998',
-  };
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -24,7 +19,7 @@ describe('AppController (e2e)', () => {
   it('/ (POST) should create a new customer', async () => {
     return request(app.getHttpServer())
       .post('/customer')
-      .send(mockCustomer)
+      .send(mockedCustomerDto)
       .expect(201);
   });
 
@@ -32,7 +27,7 @@ describe('AppController (e2e)', () => {
     return request(app.getHttpServer())
       .post('/customer')
       .send({
-        ...mockCustomer,
+        ...mockedCustomerDto,
         cpf: '111.444.777-05',
       })
       .expect(422);
@@ -41,13 +36,13 @@ describe('AppController (e2e)', () => {
   it('/ (POST) should throw conflict exception if the CPF already exists', async () => {
     return request(app.getHttpServer())
       .post('/customer')
-      .send(mockCustomer)
+      .send(mockedCustomerDto)
       .expect(409);
   });
 
   it('/ (GET) should return a customer by CPF', async () => {
     return request(app.getHttpServer())
-      .get(`/customer/${mockCustomer.cpf}`)
+      .get(`/customer/${mockedCustomerDto.cpf}`)
       .expect(200)
       .then((response) => {
         const customer = response.body;

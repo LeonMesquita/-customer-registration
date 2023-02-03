@@ -3,29 +3,19 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Customer, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CPFValidator } from 'src/utils/cpf-validator.util';
 import { CustomerService } from './customer.service';
-import { CreateCustomerDto } from './dto/create-customer.dto';
+import {
+  customersList,
+  mockedCustomer,
+  mockedCustomerDto,
+} from 'src/utils/mocks.util';
 
 describe('CustomerService', () => {
   let service: CustomerService;
   let cpfValidator: CPFValidator;
-  const mockedCustomer: Customer = {
-    id: 1,
-    name: 'Mocked Name',
-    cpf: '111.444.777-35',
-    birth_date: new Date(),
-    createdAt: new Date(),
-  };
-  const mockedCustomerDto: CreateCustomerDto = {
-    name: 'Mocked Name',
-    cpf: '111.444.777-35',
-    birth_date: '16/04/1998',
-  };
-
-  const customersList: Array<Customer> = [mockedCustomer];
 
   const mockedCreateCustomer = jest.fn().mockResolvedValue(mockedCustomer);
   const mockedFindUnique = jest.fn().mockResolvedValue(null);
